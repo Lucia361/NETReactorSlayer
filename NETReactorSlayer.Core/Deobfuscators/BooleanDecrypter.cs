@@ -29,10 +29,7 @@ namespace NETReactorSlayer.Core.Deobfuscators
             try
             {
                 if (!Find())
-                {
-                    Logger.Warn("Couldn't find any encrypted boolean.");
                     return;
-                }
 
                 var bytes = _encryptedResource.Decrypt();
 
@@ -44,8 +41,6 @@ namespace NETReactorSlayer.Core.Deobfuscators
                     Cleaner.AddResourceToBeRemoved(_encryptedResource.EmbeddedResource);
                     Cleaner.AddMethodToBeRemoved(_encryptedResource.DecrypterMethod);
                 }
-                else
-                    Logger.Warn("Couldn't find any encrypted boolean.");
             }
             catch (Exception ex)
             {
@@ -111,7 +106,7 @@ namespace NETReactorSlayer.Core.Deobfuscators
             return count;
         }
 
-        private bool Decrypt(int offset, byte[] bytes) =>
+        private static bool Decrypt(int offset, byte[] bytes) =>
             Context.ModuleBytes[BitConverter.ToUInt32(bytes, offset)] == 0x80;
 
         #endregion
